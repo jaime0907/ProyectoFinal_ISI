@@ -70,6 +70,18 @@ public class PeliculasService {
 		return result;
 	}
 	
+	/**
+	 * Metodo encargado de procesar un la salida de todas la lista con todas las peliculas cuyo titulo empiecen por el indicado 
+	 * @return Lista de peliculas de la tabla Peliculas
+	 * @throws SQLException
+	 */
+	public List<Peliculas> getAllPeliculasByTitulo(String name){
+		PeliculasDAOImpl pelisDAO = new PeliculasDAOImpl();
+		List<Peliculas> result = pelisDAO.selectAllWhereTitle(name);
+		pelisDAO.close();
+		return result;
+	}
+	
 
 	/**
 	 * Crea una tabla peliculas con el formato adecuado y devuelve si se ha creado con exito

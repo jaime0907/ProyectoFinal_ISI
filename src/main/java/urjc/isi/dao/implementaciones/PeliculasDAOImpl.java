@@ -111,21 +111,7 @@ public class PeliculasDAOImpl extends GenericDAOImpl<Peliculas> implements Pelic
 			System.out.println(e.getMessage());
 		}
 	}
-  
-	public List<Peliculas> selectByName(String title){
-		List<Peliculas> filmList = new ArrayList<>();
-		String sql = "SELECT * from peliculas where titulo like '" + title + "%'";
-		try (PreparedStatement pstmt = c.prepareStatement(sql)) {
-			ResultSet rs = pstmt.executeQuery();
-			c.commit();
-			while(rs.next()){
-				filmList.add(fromResultSet(rs));
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		return filmList;
-	}
+
 	
 	@Override
 	public List<Peliculas> selectAllWhereActor(String name) {
@@ -144,5 +130,21 @@ public class PeliculasDAOImpl extends GenericDAOImpl<Peliculas> implements Pelic
 		  System.out.println(e.getMessage());
 	  }
 	  return filmList;
+	}
+	
+	@Override
+	public List<Peliculas> selectAllWhereTitle(String title){
+		List<Peliculas> filmList = new ArrayList<>();
+		String sql = "SELECT * from peliculas where titulo like '" + title + "%'";
+		try (PreparedStatement pstmt = c.prepareStatement(sql)) {
+			ResultSet rs = pstmt.executeQuery();
+			c.commit();
+			while(rs.next()){
+				filmList.add(fromResultSet(rs));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return filmList;
 	}
 }
