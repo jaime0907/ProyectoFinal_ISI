@@ -159,6 +159,18 @@ public class PeliculasDAOImpl extends GenericDAOImpl<Peliculas> implements Pelic
 						cond+= "p.año >= " + "'" + years[0] + "'" + " and " + "p.año <= "+ "'"+ years[1] + "'" ;
 					}
 					break;
+				case "genero":
+					sql+="Inner join peliculasgeneros as pg on p.idpelicula=pg.id_pelicula ";
+					
+					String[] generos = conditions.get("genero").split("|");
+					int i = 0;
+					for (i = 0; i < generos.length; i++) { 
+						cond+= "pg.genero = "+"'"+generos[i] + "' ";
+						if(i != generos.length - 1) {
+							cond+= " OR ";
+						}
+					}
+					break;
 			}
 			if(k.hasMoreElements()) {
 				cond+=" AND ";
