@@ -129,6 +129,7 @@ public class PeliculasDAOImpl extends GenericDAOImpl<Peliculas> implements Pelic
 		}
 		
 		String cond = "WHERE ";
+		String ordenar = "";
 		for(Enumeration<String> k = conditions.keys(); k.hasMoreElements();) {
 			switch(k.nextElement()) {
 				case "actor":
@@ -182,16 +183,17 @@ public class PeliculasDAOImpl extends GenericDAOImpl<Peliculas> implements Pelic
 						cond+= "p.año >= " + "'" + years[0] + "'" + " and " + "p.año <= "+ "'"+ years[1] + "'" ;
 					}
 					break;
-				case "idioma":
-					cond+= "1 = 1";
+				case "order":
+					ordenar = " order by p." + conditions.get("order");
+					cond += " 1 = 1";
 					break;
 			}
 			if(k.hasMoreElements()) {
 				cond+=" AND ";
 			}
 		}
-		System.out.println(sql+cond);
-		try (PreparedStatement pstmt = c.prepareStatement(sql+cond)) {
+		
+		try (PreparedStatement pstmt = c.prepareStatement(sql+cond+ordenar)) {
 			ResultSet rs = pstmt.executeQuery();
 			c.commit();
 			while(rs.next()){
